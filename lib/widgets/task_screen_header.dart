@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 class TaskScreenHeader extends StatelessWidget {
-  const TaskScreenHeader({super.key});
+  final int tasksCount;
+
+  TaskScreenHeader(this.tasksCount);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        CircleAvatar(
+      children: [
+        const CircleAvatar(
           backgroundColor: Colors.white,
           radius: 30,
           child: Icon(
@@ -17,15 +19,15 @@ class TaskScreenHeader extends StatelessWidget {
             color: Colors.lightBlueAccent,
           ),
         ),
-        SizedBox(height: 25),
-        Text(
+        const SizedBox(height: 25),
+        const Text(
           'Todoey',
           style: TextStyle(
               color: Colors.white, fontSize: 50, fontWeight: FontWeight.w800),
         ),
         Text(
-          '12 Tasks',
-          style: TextStyle(color: Colors.white, fontSize: 18),
+          '$tasksCount Tasks',
+          style: const TextStyle(color: Colors.white, fontSize: 18),
         )
       ],
     );

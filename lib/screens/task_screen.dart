@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:todoey/widgets/task_screen_header.dart';
-import 'package:todoey/widgets/task_card_view.dart';
 import 'package:todoey/screens/add_task_screen.dart';
+import '../models/task.dart';
+import '../widgets/task_list_view.dart';
 
-class TaskScreen extends StatelessWidget {
+class TaskScreen extends StatefulWidget {
+  @override
+  State<TaskScreen> createState() => _TaskScreenState();
+}
+
+class _TaskScreenState extends State<TaskScreen> {
+  List<Task> tasks = [];
+
+  void addNewTask(Task newTask) {
+    tasks.add(newTask);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,8 +26,19 @@ class TaskScreen extends StatelessWidget {
           Container(
               padding: const EdgeInsets.only(
                   top: 60, left: 30, right: 30, bottom: 20),
-              child: const TaskScreenHeader()),
-          TaskCardView(),
+              child: TaskScreenHeader(tasks.length)),
+          Expanded(
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+              ),
+              child: TaskListView(tasks: tasks),
+            ),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -27,13 +50,18 @@ class TaskScreen extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: AddTaskScreen(),
+                child: AddTaskScreen((newTaskTitle) {
+                  setState(() {
+                    tasks.add(Task(name: newTaskTitle));
+                  });
+                  Navigator.pop(context);
+                }),
               ),
             ),
           );
         },
         backgroundColor: Colors.lightBlueAccent,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
