@@ -16,13 +16,15 @@ class _TaskListViewState extends State<TaskListView> {
       builder: (context, taskData, child) {
         return ListView.builder(
           itemBuilder: (context, index) {
+            final task = taskData.tasks[index];
             return TaskListTile(
-              isChecked: taskData.tasks[index].isDone,
-              taskTitle: taskData.tasks[index].name,
+              isChecked: task.isDone,
+              taskTitle: task.name,
               checkBoxCallback: (bool? checkboxState) {
-                // setState(() {
-                //   widget.tasks[index].toggleDone();
-                // });
+                Provider.of<TaskData>(context, listen: false).changeTask(task);
+              },
+              deleteCallback: () {
+                Provider.of<TaskData>(context, listen: false).deleteTask(task);
               },
             );
           },
