@@ -16,6 +16,7 @@ class MyApp extends StatelessWidget {
       create: (context) => TaskData(),
       child: MaterialApp(
         home: TaskScreen(),
+        debugShowCheckedModeBanner: false,
       ),
     );
   }
